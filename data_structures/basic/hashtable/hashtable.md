@@ -11,7 +11,7 @@
 ## When to use 
 
 - You don't care about sorted structure and about iterating many times over it
-- Your data is easy hashable  
+- Your data is easy hashable with low collision rate (like uniform distribution)
 
 ## Theory
 Hash table is an associative array (maps keys to values)  
