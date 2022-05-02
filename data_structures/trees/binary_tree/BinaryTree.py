@@ -89,16 +89,32 @@ class BinaryTree:
             root = self.root
         result = [root.value]
         if root.left_child is not None:
-            result.append(self.pre_order(root.left_child))
+            result.extend(self.pre_order(root.left_child))
         if root.right_child is not None:
-            result.append(self.pre_order(root.right_child))
+            result.extend(self.pre_order(root.right_child))
         return result
 
-    def in_order(self):
-        return
+    def in_order(self, root: TreeNode = None):
+        if root is None:
+            root = self.root
+        result = []
+        if root.left_child is not None:
+            result.extend(self.in_order(root.left_child))
+        result.append(root.value)
+        if root.right_child is not None:
+            result.extend(self.in_order(root.right_child))
+        return result
 
-    def post_order(self):
-        return
+    def post_order(self, root: TreeNode = None):
+        if root is None:
+            root = self.root
+        result = []
+        if root.left_child is not None:
+            result.extend(self.post_order(root.left_child))
+        if root.right_child is not None:
+            result.extend(self.post_order(root.right_child))
+        result.append(root.value)
+        return result
 
     def get_depth(self, root=None):
         if root is None:
