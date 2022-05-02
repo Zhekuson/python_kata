@@ -21,7 +21,7 @@ class BinaryTree:
                     next_level[i] = (1, node[1].right_child)
                 i += 1
             pre_len = int(2 ** (depth_counter - 1) - 1) * (symb_length // 2 + 1)
-            post_len = pre_len + 1
+            post_len = pre_len + 1 + (1 if symb_length % 2 == 0 else 0)
             for item in current_level:
                 if item[1] is not None:
                     print(' ' * pre_len + f'{item[1].value:^{symb_length}}' +
