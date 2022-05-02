@@ -12,7 +12,7 @@ class TestBinaryTree(TestCase):
         tree.insert(3)
         tree.insert(3)
         tree.insert(0)
-        tree.insert(1000000)
+        tree.insert(800)
         print(tree.get_depth())
         tree.print()
 
