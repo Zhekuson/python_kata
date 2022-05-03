@@ -27,7 +27,7 @@ class BinaryTree:
                     print(' ' * pre_len + f'{item[1].value:^{symb_length}}' +
                           ' ' * post_len, end='')
                 else:
-                    print(' ' * pre_len + '-'*symb_length + ' ' * post_len, end='')
+                    print(' ' * pre_len + '-' * symb_length + ' ' * post_len, end='')
             print()
             current_level = next_level
             depth_counter -= 1
@@ -69,20 +69,97 @@ class BinaryTree:
         return False
 
     def get_max(self):
-        current = self.root
+        return self._get_max()[0].value
+
+    def _get_max(self, root=None):
+        if root is None:
+            root = self.root
+        current = root
+        parent = current
         while current.right_child is not None:
+            parent = current
             current = current.right_child
-        return current.value
+        return current, parent
 
     def get_min(self):
-        current = self.root
+        return self._get_min()[0].value
+
+    def _get_min(self, root=None):
+        if root is None:
+            root = self.root
+        current = root
+        parent = current
         while current.left_child is not None:
+            parent = current
             current = current.left_child
-        return current.value
+        return current, parent
+
+    @staticmethod
+    def __reassigning(parent, assigned_child, is_right_child):
+        if is_right_child:
+            parent.right_child = assigned_child
+        else:
+            parent.left_child = assigned_child
 
     def remove(self, value):
+        current = self.root
+        parent = None
+        while current is not None:
+            if value > current.value:
+                if current.right_child is not None:
+                    parent = current
+                    current = current.right_child
+                else:
+                    return False
+            elif value < current.value:
+                if current.left_child is not None:
+                    parent = current
+                    current = current.left_child
+                else:
+                    return False
+            else:
 
-        pass
+                if parent is None:
+                    if current.right_child is not None:
+                        min_node, local_parent = self._get_min(current.right_child)
+                        local_parent.left_child = None
+                        min_node.right_child = current.right_child
+                        min_node.left_child = current.left_child
+                    elif current.left_child is not None:
+                        max_node, local_parent = self._get_max(current.left_child)
+                        local_parent.right_child = None
+                        max_node.right_child = current.right_child
+                        max_node.left_child = current.left_child
+                    current = None
+                    return True
+                else:
+                    pred = (current.left_child is None, current.right_child is None)
+                    is_right_child = False
+                    if current.value > parent.value:
+                        is_right_child = True
+                    if pred[0] and pred[1]:
+                        self.__reassigning(parent, None, is_right_child)
+                    elif pred[0] and not pred[1]:
+                        self.__reassigning(parent, current.right_child, is_right_child)
+                    elif not pred[0] and pred[1]:
+                        self.__reassigning(parent, current.left_child, is_right_child)
+                    elif not pred[0] and not pred[1]:
+                        if is_right_child:
+                            # максимум слева
+                            max_node, local_parent = self._get_max(current.left_child)
+                            local_parent.right_child = None
+                            max_node.right_child = current.right_child
+                            max_node.left_child = current.left_child
+                            parent.right_child = max_node
+                        else:
+                            # минимум справа
+                            min_node, local_parent = self._get_min(current.right_child)
+                            local_parent.left_child = None
+                            min_node.right_child = current.right_child
+                            min_node.left_child = current.left_child
+                            parent.left_child = min_node
+                    return True
+        return False
 
     def pre_order(self, root: TreeNode = None):
         if root is None:
