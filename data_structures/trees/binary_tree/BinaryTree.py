@@ -122,14 +122,19 @@ class BinaryTree:
                 if parent is None:
                     if current.right_child is not None:
                         min_node, local_parent = self._get_min(current.right_child)
-                        local_parent.left_child = None
+
                         min_node.right_child = current.right_child
                         min_node.left_child = current.left_child
+                        local_parent.left_child = None
+                        local_parent.right_child = min_node.right_child
                     elif current.left_child is not None:
                         max_node, local_parent = self._get_max(current.left_child)
-                        local_parent.right_child = None
+
                         max_node.right_child = current.right_child
                         max_node.left_child = current.left_child
+                        local_parent.right_child = None
+                        local_parent.left_child = max_node.left_child
+
                     current = None
                     return True
                 else:
