@@ -7,3 +7,4 @@ def apply_discount(product: dict, discount: float):
 if __name__ == "__main__":
     print(apply_discount({'name': 'apple', 'price': 10}, 0.3))
     print(apply_discount({'name': 'apple', 'price': 10}, 2))
+
