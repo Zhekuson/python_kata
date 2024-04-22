@@ -1,2 +1,3 @@
 # python_kata
-Data structures, algos, and some other things in Python. The main fight is the fight with yourself.
+The Dojo. Algos, fun facts, stuff  
+The main fight is the fight with yourself.
